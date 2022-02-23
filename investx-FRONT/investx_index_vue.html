@@ -1,0 +1,40 @@
+<!-- <script src="https://unpkg.com/vue@3"></script> -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+</script>
+
+
+<div id="httpResponse">
+    <button @click="loadData()"> trazer consulta </button>
+        <ul>
+            <li v-for="item in dataResponse">
+                
+                    {{ item["nome"] }}
+
+            </li>
+        </ul>
+</div>
+<script lang="ts" type="module">
+    import { createApp } from 'vue'
+
+    createApp({
+        data() {
+            return {
+                dataResponse: Array
+            }
+        },
+        methods: {
+            loadData() {
+                axios.get('https://localhost:5001/Clientes/recuperar-clientes').then( response => {
+                    this.dataResponse = response.data
+                });
+            }
+        }
+    }).mount('#httpResponse')
+</script>

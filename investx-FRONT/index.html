@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JavaScript Ajax GET Demo</title>
+
+
+</head>
+<body>
+    <div>
+        <div >
+            <label for="">texto qualquer</label>
+        </div>
+        <input type="text" name="" id="">
+        <div >
+            <label for="">conteudo via javascript puro</label>
+        </div>
+        <pre id="resultadoJs">
+        </pre>
+        <button type="button" onclick="getAjaxJs()">ajax JAVASCRIPT</button>
+    </div>
+
+    <div>
+        <div >
+            <label for="">outro texto qualquer</label>
+        </div>
+        <input type="text" name="" id="">
+        <div >
+            <label for="">conteudo via jquery</label>
+        </div>
+        <div id="resultadoJq">
+        </div>
+        <button type="button" id="btnAjaxJq">ajax JQUERY</button>
+    </div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function getAjaxJs() {
+        var request = new XMLHttpRequest();
+        request.open("GET", "https://localhost:5001/Clientes?cpf=11122233344");
+        request.onreadystatechange = function() {
+            
+            if(this.readyState === 4 && this.status === 200) {
+                document.getElementById("resultadoJs").innerHTML = this.responseText;
+            }
+        };
+        request.send();
+    }
+
+    $(document).ready(
+
+        $("#btnAjaxJq").click(function() {
+                $.ajax({
+                    method: "GET",
+                    url: "https://localhost:5001/Clientes?cpf=11122233344",
+                    data: null
+                })
+                .done(function( msg ) {
+                    console.log("msg: ", msg.nome);
+                    $("#resultadoJq").html(JSON.stringify(msg));
+                });
+            }
+        )
+    );
+</script>
+
+</html>
